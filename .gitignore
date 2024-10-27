@@ -1,0 +1,8 @@
+# Ignore node modules and build folders in Demo folder
+Demo/node_modules/
+Demo/ios/build/
+Demo/android/build/
+
+# Other common ignores
+Demo/.expo/
+*.log
