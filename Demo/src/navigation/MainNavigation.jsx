@@ -1,16 +1,16 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {InitilaScreen, ProfileScreen} from '../screens';
-
-const Stack = createNativeStackNavigator();
+import {InitialScreen, ProfileScreen} from '../screens';
 
 export default function AppNavigator() {
+  const Stack = createNativeStackNavigator();
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="InitialScreen">
       <Stack.Screen
-        name="InitilaScreen"
-        component={InitilaScreen}
+        name="InitialScreen"
+        component={InitialScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

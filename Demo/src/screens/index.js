@@ -1,4 +1,4 @@
-import InitilaScreen from './InitilaScreen';
+import InitialScreen from './InitialScreen';
 import ProfileScreen from './ProfileScreen';
 
-export {InitilaScreen, ProfileScreen};
+export {InitialScreen, ProfileScreen};
