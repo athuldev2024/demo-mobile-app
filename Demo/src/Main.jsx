@@ -1,11 +1,20 @@
 import React from 'react';
-import {View, StatusBar, StyleSheet, Platform} from 'react-native';
+import {
+  View,
+  StatusBar,
+  StyleSheet,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 import COLORS from './constants/colors';
 import MainNavigation from './navigation/MainNavigation';
 
 function App() {
+  const {isLoading} = useSelector(state => state.user);
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -14,9 +23,13 @@ function App() {
         hidden={Platform.OS === 'ios'}
       />
 
-      <NavigationContainer>
-        <MainNavigation />
-      </NavigationContainer>
+      {isLoading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <NavigationContainer>
+          <MainNavigation />
+        </NavigationContainer>
+      )}
     </View>
   );
 }
