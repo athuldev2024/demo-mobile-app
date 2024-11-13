@@ -14,6 +14,8 @@ const Header = ({children}) => {
 const styles = StyleSheet.create({
   header: {
     color: COLORS.primary,
+    fontFamily: 'sans-serif-thin',
+    fontWeight: 'bold',
   },
 });
 

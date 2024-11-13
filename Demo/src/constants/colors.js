@@ -1,6 +1,6 @@
 const COLORS = {
   background: 'white',
-  primary: '#0000ff',
+  primary: '#6c50a9',
 };
 
 export default COLORS;

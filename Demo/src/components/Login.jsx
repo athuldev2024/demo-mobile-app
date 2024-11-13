@@ -53,7 +53,7 @@ const Login = () => {
               <Text style={styles.errorText}>{errors.password}</Text>
             )}
 
-            <CustomButton title="Submit" icon="camera" onPress={handleSubmit} />
+            <CustomButton title="Submit" icon="login" onPress={handleSubmit} />
           </View>
         )}
       </Formik>
