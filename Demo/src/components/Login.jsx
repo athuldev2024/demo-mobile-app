@@ -11,20 +11,31 @@ import {Formik} from 'formik';
 import {CustomInput, CustomButton, Header} from '../components';
 import {LoginvalidationSchema} from '../utils/validation-utils';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {loginUser} from '../store/userSlice';
 
 const {width} = Dimensions.get('window');
 
-const loginFunc = values => {
-  console.log('+++++++++++++++++++++++++++');
-  console.log(values);
-  console.log('+++++++++++++++++++++++++++');
-};
-
 const Login = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const navigateToRegister = () => {
     navigation.navigate('Register');
+  };
+
+  const loginFunc = values => {
+    dispatch(
+      loginUser({
+        params: {
+          mobile: values.mobile,
+          password: values.password,
+        },
+        callback: data => {
+          console.log('Login was succesful');
+        },
+      }),
+    );
   };
 
   return (
