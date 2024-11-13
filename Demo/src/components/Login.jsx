@@ -1,23 +1,24 @@
 import React from 'react';
 import {Text, View, StyleSheet, Dimensions} from 'react-native';
 import {Formik} from 'formik';
-import {CustomInput, CustomButton} from '../components';
+import {CustomInput, CustomButton, Header} from '../components';
 import {LoginvalidationSchema} from '../utils/validation-utils';
 
 const {width} = Dimensions.get('window');
 
+const loginFunc = values => {
+  console.log('+++++++++++++++++++++++++++');
+  console.log(values);
+  console.log('+++++++++++++++++++++++++++');
+};
+
 const Login = () => {
-  console.log('I have reached here at last!!!');
   return (
     <View style={styles.container}>
       <Formik
         initialValues={{mobile: '', password: ''}}
         validationSchema={LoginvalidationSchema}
-        onSubmit={values => {
-          console.log('+++++++++++++++++++++++++++');
-          console.log(values);
-          console.log('+++++++++++++++++++++++++++');
-        }}>
+        onSubmit={loginFunc}>
         {({
           handleChange,
           handleBlur,
@@ -27,6 +28,7 @@ const Login = () => {
           touched,
         }) => (
           <View style={styles.formContainer}>
+            <Header>Login</Header>
             <CustomInput
               style={styles.customInput}
               placeholder="Mobile Number"
@@ -69,10 +71,9 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     height: '100%',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
-    backgroundColor: 'white',
     borderRadius: 10,
     gap: 10,
   },
