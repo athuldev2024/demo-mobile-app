@@ -14,17 +14,17 @@ import {useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('window');
 
-const loginFunc = values => {
+const registerFunc = values => {
   console.log('+++++++++++++++++++++++++++');
   console.log(values);
   console.log('+++++++++++++++++++++++++++');
 };
 
-const Login = () => {
+const Register = () => {
   const navigation = useNavigation();
 
-  const navigateToRegister = () => {
-    navigation.navigate('Register');
+  const navigateToLogin = () => {
+    navigation.navigate('Login');
   };
 
   return (
@@ -32,7 +32,7 @@ const Login = () => {
       <Formik
         initialValues={{mobile: '', password: ''}}
         validationSchema={LoginvalidationSchema}
-        onSubmit={loginFunc}>
+        onSubmit={registerFunc}>
         {({
           handleChange,
           handleBlur,
@@ -42,7 +42,7 @@ const Login = () => {
           touched,
         }) => (
           <View style={styles.formContainer}>
-            <Header>Login</Header>
+            <Header>Register</Header>
             <CustomInput
               style={styles.customInput}
               placeholder="Mobile Number"
@@ -68,11 +68,13 @@ const Login = () => {
             )}
 
             <View style={styles.buttonContainer}>
-              <CustomButton title="Login" icon="login" onPress={handleSubmit} />
-              <TouchableOpacity
-                style={styles.button}
-                onPress={navigateToRegister}>
-                <Text style={{color: 'blue'}}>Register</Text>
+              <CustomButton
+                title="register"
+                icon="login"
+                onPress={handleSubmit}
+              />
+              <TouchableOpacity style={styles.button} onPress={navigateToLogin}>
+                <Text style={{color: 'blue'}}>Login</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -116,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;
