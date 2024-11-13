@@ -1,12 +1,7 @@
 import React from 'react';
 import {Text} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import {useState} from 'react';
-
-function Login() {
-  return <Text>Login Screen</Text>;
-}
+import {Login} from '../components';
 
 function Register() {
   return <Text>Register Screen</Text>;

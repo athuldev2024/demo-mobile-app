@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StatusBar, StyleSheet} from 'react-native';
+import {View, StatusBar, StyleSheet, Platform} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
 import COLORS from './constants/colors';
@@ -11,8 +11,9 @@ function App() {
       <StatusBar
         animated={true}
         backgroundColor={COLORS.primary}
-        hidden={false}
+        hidden={Platform.OS === 'ios'}
       />
+
       <NavigationContainer>
         <MainNavigation />
       </NavigationContainer>
