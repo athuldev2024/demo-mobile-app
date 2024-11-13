@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   View,
@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {loginUser} from '../store/userSlice';
 import Toast from 'react-native-toast-message';
+import {useSelector} from 'react-redux';
 
 const {width} = Dimensions.get('window');
 
@@ -21,9 +22,26 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const {userDetails} = useSelector(state => state.user);
+
+  useEffect(() => {
+    if (userDetails && Object.keys(userDetails).length > 0) {
+      navigation.getParent()?.navigate('ProfileScreen');
+    }
+  }, [userDetails, navigation]);
+
   const navigateToRegister = () => {
     navigation.navigate('Register');
   };
+
+  function tempFunc() {
+    console.log('I have reached here!!');
+    Toast.show({
+      type: 'success',
+      text1: 'Success!',
+      text2: 'This is a toast message from a child component.',
+    });
+  }
 
   const loginFunc = values => {
     dispatch(
@@ -31,9 +49,6 @@ const Login = () => {
         body: {
           mobile: values.mobile,
           password: values.password,
-        },
-        callback: data => {
-          console.log('Login was succesful');
         },
       }),
     );
@@ -87,6 +102,8 @@ const Login = () => {
                 <Text style={{color: 'blue'}}>Register</Text>
               </TouchableOpacity>
             </View>
+
+            <CustomButton title="stupi logci" icon="login" onPress={tempFunc} />
           </View>
         )}
       </Formik>

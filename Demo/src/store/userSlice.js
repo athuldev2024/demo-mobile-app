@@ -7,7 +7,7 @@ const MESSAGES = {
 
 export const loginUser = createAsyncThunk(
   'users/login',
-  async ({body, callback}, thunkAPI) => {
+  async ({body}, thunkAPI) => {
     try {
       const res = await api({
         path: 'users/login',
@@ -15,8 +15,6 @@ export const loginUser = createAsyncThunk(
         params: {},
         body,
       });
-
-      callback && callback(res.data);
 
       return res.data;
     } catch (error) {
