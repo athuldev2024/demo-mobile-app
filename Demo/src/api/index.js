@@ -2,12 +2,14 @@ import axios from 'axios';
 
 const SUCCESS_MESSAGE_ARR = [201, 200, 204];
 
+const REACT_APP_API_URL = 'http://localhost:3000/'; //change this to proccess do env
+
 const api = async ({path, method, params, body}) => {
   try {
     const response = await axios({
       url: path,
       method,
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: REACT_APP_API_URL,
       params,
       data: body,
       validateStatus: () => true,
@@ -18,7 +20,6 @@ const api = async ({path, method, params, body}) => {
       return response;
     }
   } catch (err) {
-    // show toast message for error.
     throw new Error(err?.message);
   }
 };
