@@ -1,8 +1,13 @@
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
 const SUCCESS_MESSAGE_ARR = [201, 200, 204];
 
 const REACT_APP_API_URL = 'http://localhost:3000/'; //change this to proccess do env
+
+const MESSAGES = {
+  error_message: 'Error occured while accesing axios.',
+};
 
 const api = async ({path, method, params, body}) => {
   try {
@@ -15,11 +20,15 @@ const api = async ({path, method, params, body}) => {
       validateStatus: () => true,
     });
     if (!SUCCESS_MESSAGE_ARR.includes(Number(response.status))) {
-      throw new Error(response?.data.message ?? 'Axios error occured!!');
+      throw new Error(response?.data.message ?? MESSAGES.error_message);
     } else {
       return response;
     }
   } catch (err) {
+    Toast.show({
+      type: 'error',
+      text1: err?.message ?? MESSAGES.error_message,
+    });
     throw new Error(err?.message);
   }
 };
