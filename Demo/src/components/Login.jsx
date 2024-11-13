@@ -27,7 +27,7 @@ const Login = () => {
   const loginFunc = values => {
     dispatch(
       loginUser({
-        params: {
+        body: {
           mobile: values.mobile,
           password: values.password,
         },
