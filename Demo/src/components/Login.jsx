@@ -7,6 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Formik} from 'formik';
 import {CustomInput, CustomButton, Header} from '../components';
 import {LoginvalidationSchema} from '../utils/validation-utils';
@@ -24,9 +25,16 @@ const Login = () => {
 
   const {userDetails} = useSelector(state => state.user);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (userDetails && Object.keys(userDetails).length > 0) {
-      navigation.getParent()?.navigate('ProfileScreen');
+      AsyncStorage.setItem('userDetails', JSON.stringify(userDetails))
+        .then(() => {
+          navigation.getParent()?.navigate('ProfileScreen');
+        })
+        .catch(error => {
+          console.log('Error async storage: ', error?.message);
+        });
     }
   }, [userDetails, navigation]);
 
