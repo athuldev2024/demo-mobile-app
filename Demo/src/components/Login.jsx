@@ -12,9 +12,8 @@ import {Formik} from 'formik';
 import {CustomInput, CustomButton, Header} from '../components';
 import {LoginvalidationSchema} from '../utils/validation-utils';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
 import {loginUser} from '../store/userSlice';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const {width} = Dimensions.get('window');
 
@@ -26,13 +25,11 @@ const Login = () => {
 
   useEffect(() => {
     if (userDetails && Object.keys(userDetails).length > 0) {
-      AsyncStorage.setItem('userDetails', JSON.stringify(userDetails))
-        .then(() => {
+      AsyncStorage.setItem('userDetails', JSON.stringify(userDetails)).then(
+        () => {
           navigation.getParent()?.navigate('ProfileScreen');
-        })
-        .catch(error => {
-          console.log('Error async storage: ', error?.message);
-        });
+        },
+      );
     }
   }, [userDetails, navigation]);
 

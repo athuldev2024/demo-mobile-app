@@ -1,24 +1,33 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
-import {CustomButton, Header} from '../components';
+import {View, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
+import {Header} from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import COLORS from '../constants/colors';
+import {resetUser} from '../store/userSlice';
+import {useDispatch} from 'react-redux';
 
 const {width} = Dimensions.get('window');
 
 function ProfileScreen() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const logOutFunc = () => {
-    AsyncStorage.clear();
-    navigation.navigate('InitialScreen');
+    dispatch(resetUser());
+    AsyncStorage.clear().then(() => {
+      navigation.navigate('InitialScreen');
+    });
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Header>Profile screen</Header>
-        <CustomButton title="" icon="logout" onPress={logOutFunc} />
+        <TouchableOpacity onPress={logOutFunc}>
+          <Icon name="logout" size={30} color={COLORS.primary} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -33,8 +42,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   headerContainer: {
+    width: '100%',
     flexDirection: 'row',
-    gap: 20,
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 

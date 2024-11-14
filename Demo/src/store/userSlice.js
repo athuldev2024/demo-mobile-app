@@ -23,15 +23,24 @@ export const loginUser = createAsyncThunk(
   },
 );
 
+const initialState = {
+  userDetails: {},
+  allUsers: [],
+  isLoading: false,
+  hasError: false,
+};
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    userDetails: {},
-    allUsers: [],
-    isLoading: false,
-    hasError: false,
+  initialState,
+  reducers: {
+    updateUserDetails(state, action) {
+      state.userDetails = {
+        ...state.userDetails,
+        ...action.payload,
+      };
+    },
+    resetUser: () => initialState,
   },
-  reducers: {},
   extraReducers: builder => {
     builder
       // Login User
@@ -51,4 +60,5 @@ const userSlice = createSlice({
   },
 });
 
+export const {updateUserDetails, resetUser} = userSlice.actions;
 export default userSlice.reducer;
