@@ -14,7 +14,6 @@ import {LoginvalidationSchema} from '../utils/validation-utils';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {loginUser} from '../store/userSlice';
-import Toast from 'react-native-toast-message';
 import {useSelector} from 'react-redux';
 
 const {width} = Dimensions.get('window');
@@ -25,7 +24,6 @@ const Login = () => {
 
   const {userDetails} = useSelector(state => state.user);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (userDetails && Object.keys(userDetails).length > 0) {
       AsyncStorage.setItem('userDetails', JSON.stringify(userDetails))
@@ -41,15 +39,6 @@ const Login = () => {
   const navigateToRegister = () => {
     navigation.navigate('Register');
   };
-
-  function tempFunc() {
-    console.log('I have reached here!!');
-    Toast.show({
-      type: 'success',
-      text1: 'Success!',
-      text2: 'This is a toast message from a child component.',
-    });
-  }
 
   const loginFunc = values => {
     dispatch(
@@ -110,8 +99,6 @@ const Login = () => {
                 <Text style={{color: 'blue'}}>Register</Text>
               </TouchableOpacity>
             </View>
-
-            <CustomButton title="stupi logci" icon="login" onPress={tempFunc} />
           </View>
         )}
       </Formik>

@@ -20,7 +20,7 @@ const api = async ({path, method, params, body}) => {
       validateStatus: () => true,
     });
     if (!SUCCESS_MESSAGE_ARR.includes(Number(response.status))) {
-      throw new Error(response?.data.message ?? MESSAGES.error_message);
+      throw new Error(response?.data?.message ?? MESSAGES.error_message);
     } else {
       return response;
     }
@@ -28,6 +28,7 @@ const api = async ({path, method, params, body}) => {
     Toast.show({
       type: 'error',
       text1: err?.message ?? MESSAGES.error_message,
+      visibilityTime: 3000,
     });
     throw new Error(err?.message);
   }

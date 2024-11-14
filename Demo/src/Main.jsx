@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import Toast from 'react-native-toast-message';
 
 import COLORS from './constants/colors';
 import MainNavigation from './navigation/MainNavigation';
@@ -23,8 +22,6 @@ function App() {
         backgroundColor={COLORS.primary}
         hidden={Platform.OS === 'ios'}
       />
-
-      <Toast position="bottom" bottomOffset={20} />
 
       {isLoading ? (
         <ActivityIndicator size="large" />
