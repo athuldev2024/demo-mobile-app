@@ -6,13 +6,18 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../constants/colors';
 import {resetUser} from '../store/userSlice';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import QRCode from 'react-native-qrcode-svg';
 
 const {width} = Dimensions.get('window');
+
+let base64Logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAA..';
 
 function ProfileScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const {userDetails} = useSelector(state => state.user);
 
   const logOutFunc = () => {
     dispatch(resetUser());
@@ -24,10 +29,14 @@ function ProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Header>Profile screen</Header>
+        <Header>Welcome</Header>
         <TouchableOpacity onPress={logOutFunc}>
           <Icon name="logout" size={30} color={COLORS.primary} />
         </TouchableOpacity>
+      </View>
+
+      <View>
+        <QRCode value="http://awesome.link.qr" />
       </View>
     </View>
   );
