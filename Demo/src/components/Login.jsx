@@ -2,10 +2,12 @@
 import React, {useEffect} from 'react';
 import {
   Text,
+  KeyboardAvoidingView,
   View,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Formik} from 'formik';
@@ -49,63 +51,72 @@ const Login = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Formik
-        initialValues={{mobile: '', password: ''}}
-        validationSchema={LoginvalidationSchema}
-        onSubmit={loginFunc}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          errors,
-          touched,
-        }) => (
-          <View style={styles.formContainer}>
-            <Header>Login</Header>
-            <CustomInput
-              style={styles.customInput}
-              placeholder="Mobile Number"
-              keyboardType="numeric"
-              onChangeText={handleChange('mobile')}
-              onBlur={handleBlur('mobile')}
-              value={values.mobile}
-            />
-            {touched.mobile && errors.mobile && (
-              <Text style={styles.errorText}>{errors.mobile}</Text>
-            )}
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <View style={styles.container}>
+        <Formik
+          initialValues={{mobile: '', password: ''}}
+          validationSchema={LoginvalidationSchema}
+          onSubmit={loginFunc}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <View style={styles.formContainer}>
+              <Header>Login</Header>
+              <CustomInput
+                style={styles.customInput}
+                placeholder="Mobile Number"
+                keyboardType="numeric"
+                onChangeText={handleChange('mobile')}
+                onBlur={handleBlur('mobile')}
+                value={values.mobile}
+              />
+              {touched.mobile && errors.mobile && (
+                <Text style={styles.errorText}>{errors.mobile}</Text>
+              )}
 
-            <CustomInput
-              style={styles.customInput}
-              placeholder="Password"
-              secureTextEntry
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-            />
-            {touched.password && errors.password && (
-              <Text style={styles.errorText}>{errors.password}</Text>
-            )}
+              <CustomInput
+                style={styles.customInput}
+                placeholder="Password"
+                secureTextEntry
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+              />
+              {touched.password && errors.password && (
+                <Text style={styles.errorText}>{errors.password}</Text>
+              )}
 
-            <View style={styles.buttonContainer}>
-              <CustomButton title="Login" icon="login" onPress={handleSubmit} />
-              <TouchableOpacity
-                style={styles.button}
-                onPress={navigateToRegister}>
-                <Text style={{color: 'blue'}}>Register</Text>
-              </TouchableOpacity>
+              <View style={styles.buttonContainer}>
+                <CustomButton
+                  title="Login"
+                  icon="login"
+                  onPress={handleSubmit}
+                />
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={navigateToRegister}>
+                  <Text style={{color: 'blue'}}>Register</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        )}
-      </Formik>
-    </View>
+          )}
+        </Formik>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     paddingHorizontal: width * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
