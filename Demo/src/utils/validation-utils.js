@@ -25,7 +25,7 @@ const RegistervalidationSchema = Yup.object().shape({
   gender: Yup.mixed()
     .oneOf(['M', 'F', 'O'], 'Invalid gender selection')
     .required('Gender is required'),
-  dob: Yup.date().required('dob is required'),
+  dob: Yup.date('dob needs to be date').required('dob is required'),
 });
 
 export {LoginvalidationSchema, RegistervalidationSchema};

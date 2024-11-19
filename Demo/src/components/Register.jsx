@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   ScrollView,
@@ -11,19 +11,23 @@ import {
   Platform,
 } from 'react-native';
 import {Formik} from 'formik';
-import {CustomInput, CustomButton, Header} from '../components';
+import {
+  CustomInput,
+  CustomButton,
+  Header,
+  CustomDate,
+  CustomDropDown,
+} from '../components';
 import {RegistervalidationSchema} from '../utils/validation-utils';
 import {useNavigation} from '@react-navigation/native';
-import DateTimePicker from 'react-native-ui-datepicker';
-import {Dropdown} from 'react-native-paper-dropdown';
 import {registerUser} from '../store/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 const {width} = Dimensions.get('window');
 
 const Register = () => {
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -50,10 +54,20 @@ const Register = () => {
   ];
 
   const registerFunc = body => {
+    const {password, confirm, dob} = body;
+    if (password !== confirm) {
+      Toast.show({
+        type: 'error',
+        text1: 'Password and confirm password doesnt match.',
+        visibilityTime: 3000,
+      });
+      return;
+    }
+
     delete body.confirm;
     dispatch(
       registerUser({
-        body,
+        body: {...body, dob: new Date(dob).toISOString().split('T')[0]},
       }),
     );
   };
@@ -66,6 +80,7 @@ const Register = () => {
         <View style={styles.container}>
           <Formik
             initialValues={{
+              name: '',
               mobile: '',
               password: '',
               confirm: '',
@@ -88,15 +103,26 @@ const Register = () => {
                 <Header>Register</Header>
                 <CustomInput
                   style={styles.customInput}
+                  placeholder="Username"
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  value={values.name}
+                  touched={touched}
+                  errors={errors}
+                  fieldName={'name'}
+                />
+
+                <CustomInput
+                  style={styles.customInput}
                   placeholder="Mobile Number"
                   keyboardType="numeric"
                   onChangeText={handleChange('mobile')}
                   onBlur={handleBlur('mobile')}
                   value={values.mobile}
+                  touched={touched}
+                  errors={errors}
+                  fieldName={'mobile'}
                 />
-                {touched.mobile && errors.mobile && (
-                  <Text style={styles.errorText}>{errors.mobile}</Text>
-                )}
 
                 <CustomInput
                   style={styles.customInput}
@@ -105,10 +131,10 @@ const Register = () => {
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
+                  touched={touched}
+                  errors={errors}
+                  fieldName={'password'}
                 />
-                {touched.password && errors.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
-                )}
 
                 <CustomInput
                   style={styles.customInput}
@@ -117,10 +143,10 @@ const Register = () => {
                   onChangeText={handleChange('confirm')}
                   onBlur={handleBlur('confirm')}
                   value={values.confirm}
+                  touched={touched}
+                  errors={errors}
+                  fieldName={'confirm'}
                 />
-                {touched.confirm && errors.confirm && (
-                  <Text style={styles.errorText}>{errors.confirm}</Text>
-                )}
 
                 <CustomInput
                   style={styles.customInput}
@@ -128,53 +154,30 @@ const Register = () => {
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
+                  touched={touched}
+                  errors={errors}
+                  fieldName={'email'}
                 />
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
-                )}
 
-                <View style={{width: '90%', backgroundColor: 'transparent'}}>
-                  <Dropdown
-                    label="Gender"
-                    placeholder="Select Gender"
-                    options={OPTIONS}
-                    value={values.gender}
-                    onSelect={value => {
-                      setFieldValue('gender', value);
-                    }}
-                  />
-                </View>
-                {touched.gender && errors.gender && (
-                  <Text style={styles.errorText}>{errors.gender}</Text>
-                )}
+                <CustomDropDown
+                  value={values.gender}
+                  changeValue={gdr => {
+                    console.log('gender ===> ', gdr);
+                    setFieldValue('gender', gdr);
+                  }}
+                  OPTIONS={OPTIONS}
+                  touched={touched}
+                  errors={errors}
+                  fieldName={'gender'}
+                />
 
-                <TouchableOpacity
-                  onPress={() => setShowDatePicker(prev => !prev)}>
-                  <Text
-                    style={{
-                      padding: 10,
-                      backgroundColor: '#ddd',
-                      borderRadius: 5,
-                    }}>
-                    {String(values.dob) ?? 'Select Date'}
-                  </Text>
-                </TouchableOpacity>
-
-                {showDatePicker && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    mode="single"
-                    value={values.dob}
-                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                    onChange={selectedDate => {
-                      setShowDatePicker(false);
-                      setFieldValue('dob', selectedDate.date);
-                    }}
-                  />
-                )}
-                {touched.dob && errors.dob && (
-                  <Text style={styles.errorText}>{errors.dob}</Text>
-                )}
+                <CustomDate
+                  value={values.dob}
+                  changeValue={dt => setFieldValue('dob', dt)}
+                  touched={touched}
+                  errors={errors}
+                  fieldName={'dob'}
+                />
 
                 <View style={styles.buttonContainer}>
                   <CustomButton
@@ -217,12 +220,6 @@ const styles = StyleSheet.create({
   customInput: {
     width: '90%',
     marginVertical: 10,
-  },
-  errorText: {
-    fontSize: 12,
-    color: 'red',
-    marginTop: 4,
-    alignSelf: 'flex-start',
   },
   buttonContainer: {
     flexDirection: 'row',

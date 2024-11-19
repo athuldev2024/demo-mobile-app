@@ -76,10 +76,10 @@ const Login = () => {
                 onChangeText={handleChange('mobile')}
                 onBlur={handleBlur('mobile')}
                 value={values.mobile}
+                touched={touched}
+                errors={errors}
+                fieldName={'mobile'}
               />
-              {touched.mobile && errors.mobile && (
-                <Text style={styles.errorText}>{errors.mobile}</Text>
-              )}
 
               <CustomInput
                 style={styles.customInput}
@@ -88,10 +88,10 @@ const Login = () => {
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
                 value={values.password}
+                touched={touched}
+                errors={errors}
+                fieldName={'password'}
               />
-              {touched.password && errors.password && (
-                <Text style={styles.errorText}>{errors.password}</Text>
-              )}
 
               <View style={styles.buttonContainer}>
                 <CustomButton
