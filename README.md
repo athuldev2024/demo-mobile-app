@@ -2,4 +2,16 @@
 
 Demo React Native hybrid mobile application which will run in both iOS and Android.
 
-Tech stack: React Native, React-Native-Paper, JavaScript, Redux-Toolkit, Axios.
+### Run the application
+
+Run the application Android
+
+```bash
+npm run android
+```
+
+Run the application iOS
+
+```bash
+npm run android
+```
