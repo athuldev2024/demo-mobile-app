@@ -13,5 +13,5 @@ npm run android
 Run the application iOS
 
 ```bash
-npm run android
+npm run ios
 ```
