@@ -9,14 +9,16 @@ const MESSAGES = {
   error_message: 'Error occured while accesing axios.',
 };
 
-const api = async ({path, method, params, body}) => {
+const api = async ({path, method, params = {}, body = {}, headers = {}}) => {
   try {
+    console.log('reache dhere'); // remove me
     const response = await axios({
       url: path,
       method,
       baseURL: REACT_APP_API_URL,
       params,
       data: body,
+      headers,
       validateStatus: () => true,
     });
     if (!SUCCESS_MESSAGE_ARR.includes(Number(response.status))) {
@@ -25,6 +27,7 @@ const api = async ({path, method, params, body}) => {
       return response;
     }
   } catch (err) {
+    console.log('AXIOS error: ', err); // remove me
     Toast.show({
       type: 'error',
       text1: err?.message ?? MESSAGES.error_message,

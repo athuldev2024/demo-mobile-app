@@ -30,7 +30,6 @@ export const registerUser = createAsyncThunk(
       const res = await api({
         path: 'users/register',
         method: 'POST',
-        params: {},
         body,
       });
 
@@ -41,9 +40,45 @@ export const registerUser = createAsyncThunk(
   },
 );
 
+export const deleteUser = createAsyncThunk(
+  'users/delete',
+  async ({params, callback}, thunkAPI) => {
+    try {
+      const res = await api({
+        path: `users/delete/${params.userID}`,
+        method: 'DELETE',
+      });
+
+      callback && callback();
+
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message ?? MESSAGES.error_message);
+    }
+  },
+);
+
+export const viewUserData = createAsyncThunk(
+  'hbs/view',
+  async ({params}, thunkAPI) => {
+    try {
+      const res = await api({
+        path: `hbs/view/${params.userID}`,
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message ?? MESSAGES.error_message);
+    }
+  },
+);
+
 const initialState = {
   userDetails: {},
-  allUsers: [],
+  allUsers: {},
   isLoading: false,
   hasError: false,
 };
@@ -52,8 +87,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     updateUserDetails(state, action) {
-      state.userDetails = {
-        ...state.userDetails,
+      state.allUsers = {
+        ...state.allUsers,
         ...action.payload,
       };
     },
@@ -87,6 +122,30 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.rejected, state => {
         state.isLoading = false;
+        state.hasError = true;
+      })
+      // Delete User
+      .addCase(deleteUser.pending, state => {
+        state.isLoading = true;
+        state.hasError = false;
+      })
+      .addCase(deleteUser.fulfilled, state => {
+        state.isLoading = false;
+        state.hasError = false;
+      })
+      .addCase(deleteUser.rejected, state => {
+        state.isLoading = false;
+        state.hasError = true;
+      })
+      // View user data
+      .addCase(viewUserData.pending, state => {
+        state.hasError = false;
+      })
+      .addCase(viewUserData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.hasError = false;
+      })
+      .addCase(viewUserData.rejected, state => {
         state.hasError = true;
       });
   },
