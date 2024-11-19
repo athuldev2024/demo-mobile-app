@@ -4,19 +4,29 @@ Demo React Native hybrid mobile application which will run in both iOS and Andro
 
 ### Run the application
 
-#### Install node modules
+#### Pre installation
+
+Delete the existing package-lock.json file and install node modules
 
 ```bash
 npm install
 ```
 
-#### Run the application Android
+Delete pod lock file and pod folder and install a fresh pod folder
+
+```bash
+cd ios && rm -rf Pods Podfile.lock && pod install
+```
+
+#### Run the application
+
+For Android
 
 ```bash
 npm run android
 ```
 
-Run the application iOS
+For iOS
 
 ```bash
 npm run ios
