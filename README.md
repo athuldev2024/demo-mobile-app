@@ -4,7 +4,13 @@ Demo React Native hybrid mobile application which will run in both iOS and Andro
 
 ### Run the application
 
-Run the application Android
+#### Install node modules
+
+```bash
+npm install
+```
+
+#### Run the application Android
 
 ```bash
 npm run android
