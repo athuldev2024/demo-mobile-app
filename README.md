@@ -1,4 +1,4 @@
-# demo-mobile-app
+# Mobile chat application
 
 Demo React Native hybrid mobile application which will run in both iOS and Android.
 
@@ -19,6 +19,10 @@ cd ios && rm -rf Pods Podfile.lock && pod install
 ```
 
 #### Run the application
+
+##### Run the server (backend) first
+
+Clone this repo and run it: https://github.com/athuldev2024/demo-app-server.
 
 For Android
 
