@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {InitialScreen, ProfileScreen} from '../screens';
+import {InitialScreen, ProfileScreen, ProcessScreen} from '../screens';
 
 export default function AppNavigator() {
   const Stack = createNativeStackNavigator();
@@ -16,6 +16,11 @@ export default function AppNavigator() {
       <Stack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ProcessScreen"
+        component={ProcessScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

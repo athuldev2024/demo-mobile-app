@@ -6,12 +6,16 @@ import CustomModal from './common/CustomModal';
 import {Header} from './common/CustomText';
 import Login from './Login';
 import Register from './Register';
+import Message from './Message';
+import Update from './Update';
 
 export {
   CustomInput,
   CustomButton,
   Login,
   Register,
+  Message,
+  Update,
   Header,
   CustomDate,
   CustomDropDown,
