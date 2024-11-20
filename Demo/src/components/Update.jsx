@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text} from 'react-native-paper';
 
-function Update(props) {
+function Update() {
   return <Text>Update screen</Text>;
 }
 

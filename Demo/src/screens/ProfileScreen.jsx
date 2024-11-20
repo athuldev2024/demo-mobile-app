@@ -15,8 +15,10 @@ import {DataTable} from 'react-native-paper';
 const {width} = Dimensions.get('window');
 
 const UserTable = ({users}) => {
+  const navigation = useNavigation();
+
   const navigateToMessage = item => {
-    console.log('ITEM: ', item);
+    navigation.navigate('ProcessScreen', {screen: 'Message', params: {item}});
   };
 
   return (
@@ -78,7 +80,7 @@ function ProfileScreen() {
   };
 
   const editUser = () => {
-    console.log('edit user');
+    navigation.navigate('ProcessScreen', {screen: 'Update'});
   };
 
   return (
