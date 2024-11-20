@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
-import COLORS from '../constants/colors';
+import COLORS from '../../constants/colors';
 
 const Header = ({children}) => {
   return (
