@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../constants/colors';
 import {resetUser} from '../store/userSlice';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import QRCode from 'react-native-qrcode-svg';
 import {deleteUser, viewUserData} from '../store/userSlice';
 import {CustomModal} from '../components';
@@ -16,6 +16,8 @@ const {width} = Dimensions.get('window');
 function ProfileScreen() {
   const [visible, setModalVisible] = useState(false);
   const [userID, setUserID] = useState('');
+
+  const {allUsers} = useSelector(state => state.user);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -35,6 +37,12 @@ function ProfileScreen() {
       });
     }
   });
+
+  useEffect(() => {
+    if (allUsers) {
+      console.log('allUsers: ', allUsers);
+    }
+  }, [allUsers]);
 
   const logOutFunc = () => {
     dispatch(resetUser());

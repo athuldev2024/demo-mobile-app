@@ -11,7 +11,6 @@ const MESSAGES = {
 
 const api = async ({path, method, params = {}, body = {}, headers = {}}) => {
   try {
-    console.log('reache dhere'); // remove me
     const response = await axios({
       url: path,
       method,
@@ -27,7 +26,6 @@ const api = async ({path, method, params = {}, body = {}, headers = {}}) => {
       return response;
     }
   } catch (err) {
-    console.log('AXIOS error: ', err); // remove me
     Toast.show({
       type: 'error',
       text1: err?.message ?? MESSAGES.error_message,

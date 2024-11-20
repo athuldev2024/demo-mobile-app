@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import axios from 'axios';
 import api from '../api';
 
 const MESSAGES = {
@@ -62,13 +63,14 @@ export const viewUserData = createAsyncThunk(
   'hbs/view',
   async ({params}, thunkAPI) => {
     try {
-      const res = await api({
-        path: `hbs/view/${params.userID}`,
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
+      const res = await axios.get(
+        `http://localhost:3000/hbs/view/${params.userID}`,
+        {
+          headers: {
+            Accept: 'application/json',
+          },
         },
-      });
+      );
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message ?? MESSAGES.error_message);
@@ -144,6 +146,7 @@ const userSlice = createSlice({
       .addCase(viewUserData.fulfilled, (state, action) => {
         state.isLoading = false;
         state.hasError = false;
+        state.allUsers = action.payload;
       })
       .addCase(viewUserData.rejected, state => {
         state.hasError = true;
