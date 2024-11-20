@@ -10,8 +10,31 @@ import {useDispatch, useSelector} from 'react-redux';
 import QRCode from 'react-native-qrcode-svg';
 import {deleteUser, viewUserData} from '../store/userSlice';
 import {CustomModal} from '../components';
+import {DataTable} from 'react-native-paper';
 
 const {width} = Dimensions.get('window');
+
+const UserTable = ({users}) => {
+  const navigateToMessage = item => {
+    console.log('ITEM: ', item);
+  };
+
+  return (
+    <DataTable>
+      <DataTable.Header>
+        <DataTable.Title>Name</DataTable.Title>
+        <DataTable.Title>Email</DataTable.Title>
+      </DataTable.Header>
+
+      {users.map(item => (
+        <DataTable.Row key={item.id} onPress={() => navigateToMessage(item)}>
+          <DataTable.Cell>{item.name}</DataTable.Cell>
+          <DataTable.Cell>{item.email}</DataTable.Cell>
+        </DataTable.Row>
+      ))}
+    </DataTable>
+  );
+};
 
 function ProfileScreen() {
   const [visible, setModalVisible] = useState(false);
@@ -37,12 +60,6 @@ function ProfileScreen() {
       });
     }
   });
-
-  useEffect(() => {
-    if (allUsers) {
-      console.log('allUsers: ', allUsers);
-    }
-  }, [allUsers]);
 
   const logOutFunc = () => {
     dispatch(resetUser());
@@ -82,6 +99,12 @@ function ProfileScreen() {
       </View>
 
       <View style={styles.qr}>{userID && <QRCode value={userID} />}</View>
+
+      <View style={styles.dataTable}>
+        {allUsers?.userData?.otherUsers?.length > 0 && (
+          <UserTable users={allUsers.userData.otherUsers} />
+        )}
+      </View>
     </View>
   );
 }
@@ -105,6 +128,9 @@ const styles = StyleSheet.create({
     height: '30%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  dataTable: {
+    width: '100%',
   },
 });
 
