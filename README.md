@@ -2,6 +2,8 @@
 
 Demo React Native hybrid mobile application which will run in both iOS and Android.
 
+![alt text](image.png)
+
 ### Run the application
 
 #### Pre installation
