@@ -15,6 +15,9 @@ import {
   deleteMessage,
 } from '../store/messageSlice';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {io} from 'socket.io-client';
+
+const LOCALHOST_URL = 'http://localhost:3000';
 
 import COLORS from '../constants/colors';
 
@@ -72,6 +75,20 @@ function Message(props) {
     }
   });
 
+  useEffect(() => {
+    if (userID) {
+      const socket = io(LOCALHOST_URL, {transports: ['websocket']});
+
+      socket.on('connect', () => {
+        socket.emit('registerUser', userID);
+      });
+
+      socket.on('receiveMessage', messageObj => {
+        console.log('messageObj: ', messageObj);
+      });
+    }
+  }, [userID]);
+
   const sendPing = () => {
     if (ping) {
       dispatch(
@@ -83,6 +100,7 @@ function Message(props) {
           },
         }),
       );
+      changePing('');
     }
   };
 

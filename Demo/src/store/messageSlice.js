@@ -97,15 +97,12 @@ const messageSlice = createSlice({
       })
       // Message delete
       .addCase(deleteMessage.pending, state => {
-        state.isLoading = true;
         state.hasError = false;
       })
       .addCase(deleteMessage.fulfilled, state => {
-        state.isLoading = false;
         state.hasError = false;
       })
       .addCase(deleteMessage.rejected, state => {
-        state.isLoading = false;
         state.hasError = true;
       });
   },
