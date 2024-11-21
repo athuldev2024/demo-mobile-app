@@ -27,13 +27,15 @@ export const viewMessageData = createAsyncThunk(
 
 export const pingMessage = createAsyncThunk(
   'message/ping',
-  async ({body}, thunkAPI) => {
+  async ({body, callback}, thunkAPI) => {
     try {
       const res = await api({
         path: 'message/ping',
         method: 'POST',
         body,
       });
+
+      callback && callback(res.data);
 
       return res.data;
     } catch (error) {
@@ -68,7 +70,14 @@ const initialState = {
 const messageSlice = createSlice({
   name: 'message',
   initialState,
-  reducers: {},
+  reducers: {
+    updateMessages: (state, action) => {
+      state.messages.allMessages = [
+        ...state.messages.allMessages,
+        action.payload,
+      ];
+    },
+  },
   extraReducers: builder => {
     builder
       // View user data
@@ -108,4 +117,5 @@ const messageSlice = createSlice({
   },
 });
 
+export const {updateMessages} = messageSlice.actions;
 export default messageSlice.reducer;

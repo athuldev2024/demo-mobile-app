@@ -13,6 +13,7 @@ import {
   viewMessageData,
   pingMessage,
   deleteMessage,
+  updateMessages,
 } from '../store/messageSlice';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {io} from 'socket.io-client';
@@ -21,7 +22,7 @@ const LOCALHOST_URL = 'http://localhost:3000';
 
 import COLORS from '../constants/colors';
 
-const Card = ({item, userID}) => {
+const Card = ({item}) => {
   const dispatch = useDispatch();
 
   const deleteMessageFunc = () => {
@@ -49,6 +50,7 @@ const Card = ({item, userID}) => {
 };
 
 function Message(props) {
+  const socket = io(LOCALHOST_URL, {transports: ['websocket']});
   const [ping, changePing] = React.useState('');
   const [userID, setUserID] = useState('');
 
@@ -77,17 +79,22 @@ function Message(props) {
 
   useEffect(() => {
     if (userID) {
-      const socket = io(LOCALHOST_URL, {transports: ['websocket']});
 
       socket.on('connect', () => {
         socket.emit('registerUser', userID);
       });
 
       socket.on('receiveMessage', messageObj => {
-        console.log('messageObj: ', messageObj);
+        dispatch(
+          updateMessages({
+            bgColor: messageObj.sender === userID ? 'aqua' : 'lightgreen',
+            alignSelf: messageObj.sender === userID ? 'flex-end' : 'flex-start',
+            ...messageObj,
+          }),
+        );
       });
     }
-  }, [userID]);
+  }, [userID, dispatch, socket]);
 
   const sendPing = () => {
     if (ping) {
@@ -98,9 +105,20 @@ function Message(props) {
             receiver: props.route.params.item.id,
             message: ping,
           },
+          callback: resJson => {
+            changePing('');
+            socket.emit('multicastMessage', {
+              messageObj: {
+                id: resJson.messageID,
+                sender: userID,
+                receiver: props.route.params.item.id,
+                message: ping,
+              },
+              userIds: [userID, props.route.params.item.id],
+            });
+          },
         }),
       );
-      changePing('');
     }
   };
 
@@ -110,7 +128,7 @@ function Message(props) {
         <ScrollView>
           {messages?.allMessages?.length > 0 &&
             messages?.allMessages.map(item => {
-              return <Card key={item.id} item={item} userID={userID} />;
+              return <Card key={item.id} item={item} />;
             })}
         </ScrollView>
       </View>
