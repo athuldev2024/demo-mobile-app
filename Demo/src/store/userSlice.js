@@ -105,12 +105,6 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    updateUserDetails(state, action) {
-      state.allUsers = {
-        ...state.allUsers,
-        ...action.payload,
-      };
-    },
     resetUser: () => initialState,
   },
   extraReducers: builder => {
