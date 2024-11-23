@@ -6,8 +6,8 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(react-native|@react-native|@testing-library/react-native)/)',
   ],
-  setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
-  collectCoverage: true, // Enable coverage collection
+  setupFilesAfterEnv: ['./jest.setup.js'],
+  collectCoverage: true,
   collectCoverageFrom: ['src/components/**/*.{js,jsx,ts,tsx}'],
-  coverageReporters: ['text'], // Specify coverage report formats
+  coverageReporters: ['text', 'html'],
 };
