@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Component matches snapshot 1`] = `
+<Text
+  style={
+    [
+      {
+        "textAlign": "left",
+      },
+      {
+        "color": "rgba(28, 27, 31, 1)",
+        "writingDirection": "ltr",
+      },
+      [
+        {
+          "fontFamily": "System",
+          "fontSize": 32,
+          "fontWeight": "400",
+          "letterSpacing": 0,
+          "lineHeight": 40,
+        },
+        {
+          "color": "#6c50a9",
+          "fontFamily": "sans-serif-thin",
+          "fontWeight": "bold",
+        },
+      ],
+    ]
+  }
+>
+  Text
+</Text>
+`;
