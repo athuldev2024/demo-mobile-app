@@ -4,8 +4,6 @@ import CustomInput from '../../src/components/common/CustomInput';
 import {Provider as PaperProvider} from 'react-native-paper';
 
 describe('CustomInput Component', () => {
-  const mockOnChangeText = jest.fn();
-
   beforeEach(() => {
     jest.useFakeTimers();
   });
