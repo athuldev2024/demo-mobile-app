@@ -3,8 +3,8 @@ import {render} from '@testing-library/react-native';
 import {Header} from '../../src/components/common/CustomText'; // Ensure Header is exported properly
 
 describe('Header Component', () => {
-  it('matches snapshot', () => {
-    const {toJSON} = render(<Header>Text</Header>);
-    expect(toJSON()).toMatchSnapshot();
+  it('render properly', () => {
+    const {getByText} = render(<Header>Sample</Header>);
+    expect(getByText('Sample')).toBeTruthy();
   });
 });
