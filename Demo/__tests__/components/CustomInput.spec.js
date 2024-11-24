@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, fireEvent, act, cleanup} from '@testing-library/react-native';
+import {render, cleanup} from '@testing-library/react-native';
 import CustomInput from '../../src/components/common/CustomInput';
 import {Provider as PaperProvider} from 'react-native-paper';
 
@@ -31,6 +31,7 @@ describe('CustomInput Component', () => {
 
     expect(toJSON()).toMatchSnapshot();
   });
+
   it('see error message when invalid input', () => {
     const {getByText} = render(
       <PaperProvider>
