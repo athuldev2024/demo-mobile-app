@@ -8,7 +8,9 @@ const CustomDate = ({value, changeValue, touched, errors, fieldName}) => {
 
   return (
     <>
-      <TouchableOpacity onPress={() => setShowDatePicker(prev => !prev)}>
+      <TouchableOpacity
+        testID="show-button"
+        onPress={() => setShowDatePicker(prev => !prev)}>
         <Text style={styles.hideButton}>{String(value) ?? 'Select Date'}</Text>
       </TouchableOpacity>
 
